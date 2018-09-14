@@ -1,0 +1,33 @@
+﻿body {
+	
+}
+.nav {
+	width: 130px;
+}
+
+#menus {
+	float: left;
+}
+#menuContent {
+	padding: 70px;
+}
+#homeScreen body{
+	background-image: url('../Images/HomeScreen.jpg.jfif');
+}
+form {
+	/*border: 3px solid #f1f1f1;*/
+}
+/*.loginbtn {
+	text-align: center;
+}*/
+.form-group.required .control-label:after {
+	content: "*";
+	color: red;
+}
+
+#viewContent {
+
+}
+.validation-summary-valid {
+	display: none;
+}

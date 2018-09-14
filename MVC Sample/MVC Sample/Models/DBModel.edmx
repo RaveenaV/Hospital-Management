@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HospitalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientKey" />
+          </Key>
+          <Property Name="PatientName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="PatientLastName" Type="varchar" MaxLength="500" />
+          <Property Name="FatherName" Type="varchar" MaxLength="500" />
+          <Property Name="HusbandName" Type="varchar" MaxLength="500" />
+          <Property Name="GuardianName" Type="varchar" MaxLength="500" />
+          <Property Name="BloodGroup" Type="varchar" MaxLength="5" />
+          <Property Name="ContactNumber" Type="varchar" MaxLength="15" />
+          <Property Name="ContactNumber2" Type="varchar" MaxLength="15" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Gender" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="PatientKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ROLES">
+          <Key>
+            <PropertyRef Name="RoleSKey" />
+          </Key>
+          <Property Name="RoleSKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffKey" />
+          </Key>
+          <Property Name="StaffName" Type="varchar" MaxLength="300" />
+          <Property Name="StaffLastName" Type="varchar" MaxLength="300" />
+          <Property Name="Designation" Type="varchar" MaxLength="500" />
+          <Property Name="RoleSKey" Type="int" />
+          <Property Name="IsAdmin" Type="bit" />
+          <Property Name="StaffKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Hospital.dbo.UserLogin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="LoginSKey" />
+          </Key>
+          <Property Name="LoginSKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StaffSKey" Type="int" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+          <Property Name="UserName" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <Association Name="FK__Staff__RoleSKey__440B1D61">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="RoleSKey" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="RoleSKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserLogin__Staff__4AB81AF0">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffKey" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="StaffSKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HospitalModelStoreContainer">
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLogin" EntityType="Self.UserLogin" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserLogin].[LoginSKey] AS [LoginSKey], 
+    [UserLogin].[StaffSKey] AS [StaffSKey], 
+    [UserLogin].[Password] AS [Password], 
+    [UserLogin].[UserName] AS [UserName]
+    FROM [dbo].[UserLogin] AS [UserLogin]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Staff__RoleSKey__440B1D61" Association="Self.FK__Staff__RoleSKey__440B1D61">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserLogin__Staff__4AB81AF0" Association="Self.FK__UserLogin__Staff__4AB81AF0">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="UserLogin" EntitySet="UserLogin" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HospitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientKey" />
+          </Key>
+          <Property Name="PatientName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PatientLastName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FatherName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="HusbandName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="GuardianName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BloodGroup" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNumber2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PatientKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="RoleSKey" />
+          </Key>
+          <Property Name="RoleSKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK__Staff__RoleSKey__440B1D61" FromRole="ROLES" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffKey" />
+          </Key>
+          <Property Name="StaffName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="StaffLastName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Designation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="RoleSKey" Type="Int32" />
+          <Property Name="IsAdmin" Type="Boolean" />
+          <Property Name="StaffKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="ROLE" Relationship="Self.FK__Staff__RoleSKey__440B1D61" FromRole="Staff" ToRole="ROLES" />
+          <NavigationProperty Name="UserLogins" Relationship="Self.FK__UserLogin__Staff__4AB81AF0" FromRole="Staff" ToRole="UserLogin" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="LoginSKey" />
+          </Key>
+          <Property Name="LoginSKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StaffSKey" Type="Int32" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK__UserLogin__Staff__4AB81AF0" FromRole="UserLogin" ToRole="Staff" />
+        </EntityType>
+        <Association Name="FK__Staff__RoleSKey__440B1D61">
+          <End Role="ROLES" Type="Self.ROLE" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="RoleSKey" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="RoleSKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserLogin__Staff__4AB81AF0">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffKey" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="StaffSKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HospitalManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLE" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
+          <AssociationSet Name="FK__Staff__RoleSKey__440B1D61" Association="Self.FK__Staff__RoleSKey__440B1D61">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserLogin__Staff__4AB81AF0" Association="Self.FK__UserLogin__Staff__4AB81AF0">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="UserLogin" EntitySet="UserLogins" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HospitalModelStoreContainer" CdmEntityContainer="HospitalManagementEntities">
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="HospitalModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="PatientLastName" ColumnName="PatientLastName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="HusbandName" ColumnName="HusbandName" />
+                <ScalarProperty Name="GuardianName" ColumnName="GuardianName" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="ContactNumber2" ColumnName="ContactNumber2" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="PatientKey" ColumnName="PatientKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLES">
+            <EntityTypeMapping TypeName="HospitalModel.ROLE">
+              <MappingFragment StoreEntitySet="ROLES">
+                <ScalarProperty Name="RoleSKey" ColumnName="RoleSKey" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="HospitalModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+                <ScalarProperty Name="StaffLastName" ColumnName="StaffLastName" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="RoleSKey" ColumnName="RoleSKey" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="StaffKey" ColumnName="StaffKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLogins">
+            <EntityTypeMapping TypeName="HospitalModel.UserLogin">
+              <MappingFragment StoreEntitySet="UserLogin">
+                <ScalarProperty Name="LoginSKey" ColumnName="LoginSKey" />
+                <ScalarProperty Name="StaffSKey" ColumnName="StaffSKey" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

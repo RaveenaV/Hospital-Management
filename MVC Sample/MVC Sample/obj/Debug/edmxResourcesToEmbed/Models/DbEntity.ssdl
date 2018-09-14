@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HospitalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Hospital.dbo.Patient' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientSKey" />
+      <PropertyRef Name="PatientName" />
+      <PropertyRef Name="Gender" />
+    </Key>
+    <Property Name="PatientSKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientName" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="PatientLastName" Type="varchar" MaxLength="500" />
+    <Property Name="FatherName" Type="varchar" MaxLength="500" />
+    <Property Name="HusbandName" Type="varchar" MaxLength="500" />
+    <Property Name="GuardianName" Type="varchar" MaxLength="500" />
+    <Property Name="BloodGroup" Type="varchar" MaxLength="5" />
+    <Property Name="ContactNumber" Type="varchar" MaxLength="15" />
+    <Property Name="ContactNumber2" Type="varchar" MaxLength="15" />
+    <Property Name="DOB" Type="date" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Gender" Type="varchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ROLES">
+    <Key>
+      <PropertyRef Name="RoleSKey" />
+    </Key>
+    <Property Name="RoleSKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="StaffSKey" />
+    </Key>
+    <Property Name="StaffSKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StaffName" Type="varchar" MaxLength="300" />
+    <Property Name="StaffLastName" Type="varchar" MaxLength="300" />
+    <Property Name="Designation" Type="varchar" MaxLength="500" />
+    <Property Name="RoleSKey" Type="int" />
+    <Property Name="IsAdmin" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Hospital.dbo.UserLogin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="UserLogin">
+    <Key>
+      <PropertyRef Name="LoginSKey" />
+    </Key>
+    <Property Name="LoginSKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StaffSKey" Type="int" />
+    <Property Name="Password" Type="varchar" MaxLength="20" />
+    <Property Name="UserName" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <Association Name="FK__Staff__RoleSKey__440B1D61">
+    <End Role="ROLES" Type="Self.ROLES" Multiplicity="0..1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROLES">
+        <PropertyRef Name="RoleSKey" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="RoleSKey" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserLogin__Staff__45F365D3">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffSKey" />
+      </Principal>
+      <Dependent Role="UserLogin">
+        <PropertyRef Name="StaffSKey" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HospitalModelStoreContainer">
+    <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Patient].[PatientSKey] AS [PatientSKey], 
+    [Patient].[PatientName] AS [PatientName], 
+    [Patient].[PatientLastName] AS [PatientLastName], 
+    [Patient].[FatherName] AS [FatherName], 
+    [Patient].[HusbandName] AS [HusbandName], 
+    [Patient].[GuardianName] AS [GuardianName], 
+    [Patient].[BloodGroup] AS [BloodGroup], 
+    [Patient].[ContactNumber] AS [ContactNumber], 
+    [Patient].[ContactNumber2] AS [ContactNumber2], 
+    [Patient].[DOB] AS [DOB], 
+    [Patient].[Age] AS [Age], 
+    [Patient].[Gender] AS [Gender]
+    FROM [dbo].[Patient] AS [Patient]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="UserLogin" EntityType="Self.UserLogin" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [UserLogin].[LoginSKey] AS [LoginSKey], 
+    [UserLogin].[StaffSKey] AS [StaffSKey], 
+    [UserLogin].[Password] AS [Password], 
+    [UserLogin].[UserName] AS [UserName]
+    FROM [dbo].[UserLogin] AS [UserLogin]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Staff__RoleSKey__440B1D61" Association="Self.FK__Staff__RoleSKey__440B1D61">
+      <End Role="ROLES" EntitySet="ROLES" />
+      <End Role="Staff" EntitySet="Staff" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserLogin__Staff__45F365D3" Association="Self.FK__UserLogin__Staff__45F365D3">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="UserLogin" EntitySet="UserLogin" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

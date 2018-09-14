@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HospitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="StaffSKey" />
+    </Key>
+    <Property Name="StaffSKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StaffName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="StaffLastName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="Designation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="RoleSKey" Type="Boolean" />
+    <Property Name="IsAdmin" Type="Boolean" />
+    <NavigationProperty Name="UserLogins" Relationship="HospitalModel.FK__Logins__StaffSKe__3C69FB991" FromRole="Staff" ToRole="UserLogin" />
+    <NavigationProperty Name="ROLE" Relationship="HospitalModel.FK__Staff__RoleSKey__440B1D61" FromRole="Staff" ToRole="ROLE" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientSKey" />
+      <PropertyRef Name="PatientName" />
+      <PropertyRef Name="Gender" />
+    </Key>
+    <Property Name="PatientSKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PatientLastName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="FatherName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="HusbandName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="GuardianName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="BloodGroup" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ContactNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="ContactNumber2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ROLE">
+    <Key>
+      <PropertyRef Name="RoleSKey" />
+    </Key>
+    <Property Name="RoleSKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Staffs" Relationship="HospitalModel.FK__Staff__RoleSKey__440B1D61" FromRole="ROLE" ToRole="Staff" />
+  </EntityType>
+  <EntityContainer Name="HospitalEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Staffs" EntityType="Self.Staff" />
+    <EntitySet Name="Patients" EntityType="Self.Patient" />
+    <EntitySet Name="ROLES" EntityType="Self.ROLE" />
+    <EntitySet Name="UserLogins" EntityType="HospitalModel.UserLogin" />
+    <AssociationSet Name="FK__Logins__StaffSKe__3C69FB991" Association="HospitalModel.FK__Logins__StaffSKe__3C69FB991">
+      <End Role="Staff" EntitySet="Staffs" />
+      <End Role="UserLogin" EntitySet="UserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Staff__RoleSKey__440B1D61" Association="HospitalModel.FK__Staff__RoleSKey__440B1D61">
+      <End Role="ROLE" EntitySet="ROLES" />
+      <End Role="Staff" EntitySet="Staffs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserLogin">
+    <Key>
+      <PropertyRef Name="LoginSKey" />
+    </Key>
+    <Property Name="LoginSKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StaffSKey" Type="Int32" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Staff" Relationship="HospitalModel.FK__Logins__StaffSKe__3C69FB991" FromRole="UserLogin" ToRole="Staff" />
+    <Property Name="UserName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__Logins__StaffSKe__3C69FB991">
+    <End Type="HospitalModel.Staff" Role="Staff" Multiplicity="0..1" />
+    <End Type="HospitalModel.UserLogin" Role="UserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffSKey" />
+      </Principal>
+      <Dependent Role="UserLogin">
+        <PropertyRef Name="StaffSKey" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Staff__RoleSKey__440B1D61">
+    <End Type="HospitalModel.ROLE" Role="ROLE" Multiplicity="0..1" />
+    <End Type="HospitalModel.Staff" Role="Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROLE">
+        <PropertyRef Name="RoleSKey" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="RoleSKey" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

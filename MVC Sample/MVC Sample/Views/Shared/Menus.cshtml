@@ -1,0 +1,64 @@
+﻿<div id="menus" class="col-md-3">
+	<ul class="nav nav-pills nav-stacked">
+		@if ((Session["Role"]) != null && Session["Role"].ToString() == "Pharmacist")
+		{
+			@Html.Partial("PatientSearch")
+		}
+		else
+		{
+			<li class="active menu">@Html.ActionLink("Patient Search", "PatientSearch", "Patient")</li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown">
+					Staff
+					<span class="caret"></span>
+				</a>
+				@if (Session["Role"].ToString() == "Doctor")
+				{
+				<ul class="dropdown-menu">
+					@*<li class="nav-pills"><a href="#addStaff">Add Staff</a></li>*@
+					<li class="nav-pills">@Html.ActionLink("Add Staff", "Create", "Staff")</li>
+				</ul>
+				}
+			</li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" >
+					Patient
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					@*<li class="nav-pills"><a href="#addPatient">Add Patient</a></li>
+						<li class="nav-pills"><a href="#patientSearch">Patient Search</a></li>
+						<li class="nav-pills"><a href="#appointment">Patient Appointment</a></li>*@
+					<li class="nav-pills">@Html.ActionLink("Add Patient", "Create", "Patient")</li>
+					<li class="nav-pills">@Html.ActionLink("Patient Search", "PatientSearch", "Patient")</li>
+					<li class="nav-pills">@Html.ActionLink("Patient Appointment", "PatientAppointment", "")</li>
+				</ul>
+			</li>
+		}
+	</ul>
+</div>
+@*<div class="tab-content body-content container col-md-9" id="viewContent">
+
+		<div id="patientSearch" class="tab-pane active">
+			@{
+				Html.RenderPartial("PatientSearch");
+			}
+		</div>
+		<div id="addPatient" class="tab-pane">
+			@{
+				Html.RenderAction("create", "Patient");
+			}
+		</div>
+		<div id="appointment" class="tab-pane">
+			@{
+				//Html.RenderPartial("appointment",new ViewDataDictionary(Model.StaffDetails));
+				Html.RenderAction("PatientAppointment", "Patient");
+			}
+		</div>
+		<div id="addStaff" class="tab-pane">
+			@{
+				Html.RenderAction("Create", "Staff");
+			}
+		</div>
+	</div>*@
+

@@ -1,0 +1,48 @@
+﻿@model MVC_Sample.Models.PatientDetails
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("PatientSearch", "Patient",FormMethod.Post, new { @class="col-md-6" }))
+{
+	<div class="form-horizontal">
+	<div>
+		<div class="form-group centerlook">
+			<label>Please enter Patient's ID</label>
+			@Html.EditorFor(n => n.PatientKey)
+		</div>
+		<h5> OR </h5>
+		<div class="form-group centerlook">
+			<label>Please enter Patient's First Name:</label>
+			@Html.EditorFor(n => n.PatientName)
+			<br>
+			<label>Please enter Patient's Last Name:</label>
+			@Html.EditorFor(n => n.PatientLastName)
+		</div>
+		<div class="form-group error">
+			@if (@ViewBag.NotFound != null)
+			{
+				<label> @ViewBag.NotFound</label>
+			}
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Search" class="btn btn-default" />
+			</div>
+		</div>
+	</div>
+	</div>
+}
+@*<script>
+		$("#patientKey").change(function () {
+			if ($('#patientKey').val() != "") {
+				$("#patientName").prop("disabled");
+			}
+		});
+		$("#patientName").change(function () {
+			if ($('#patientName').val() != "") {
+				$("#patientKey").prop("disabled");
+			}
+		});
+	</script>*@

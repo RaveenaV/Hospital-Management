@@ -1,0 +1,76 @@
+﻿@model MVC_Sample.Models.StaffDetails
+
+@{
+	Layout = null;
+}
+
+@*@if (string.IsNullOrWhiteSpace(Model.StaffName))
+	{
+		Html.EnableClientValidation(false);
+	}*@
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+		<div class="page-header">
+			<h4>New Staff Registeration</h4>
+		</div>
+		<div class="form-horizontal col-md-6">
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+			<div class="form-group">
+				@Html.LabelFor(model => model.StaffName, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					@Html.EditorFor(model => model.StaffName, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.StaffName, "", new { @class = "text-danger" })
+				</div>
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(model => model.StaffLastName, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					@Html.EditorFor(model => model.StaffLastName, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.StaffLastName, "", new { @class = "text-danger" })
+				</div>
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					@Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+				</div>
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					<div class="dropdown">
+						@Html.EnumDropDownListFor(model => model.Role)
+						@Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(model => model.IsAdmin, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					<div class="checkbox">
+						@Html.EditorFor(model => model.IsAdmin)
+						@Html.ValidationMessageFor(model => model.IsAdmin, "", new { @class = "text-danger" })
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+					<input type="submit" value="Save" class="btn btn-default" />
+				</div>
+			</div>
+			<label> @ViewBag.Success</label>
+		</div>
+	</div>
+}
+
+@*@section Scripts {
+		@Scripts.Render("~/bundles/jqueryval")
+	}*@
