@@ -18,6 +18,8 @@ namespace MVC_Sample.Models
         public Staff()
         {
             this.UserLogins = new HashSet<UserLogin>();
+            this.Appointments = new HashSet<Appointment>();
+            this.PatientVisits = new HashSet<PatientVisit>();
         }
     
         public string StaffName { get; set; }
@@ -30,5 +32,9 @@ namespace MVC_Sample.Models
         public virtual ROLE ROLE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserLogin> UserLogins { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appointment> Appointments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PatientVisit> PatientVisits { get; set; }
     }
 }

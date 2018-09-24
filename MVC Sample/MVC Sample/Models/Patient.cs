@@ -14,6 +14,13 @@ namespace MVC_Sample.Models
     
     public partial class Patient
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Patient()
+        {
+            this.Appointments = new HashSet<Appointment>();
+            this.PatientVisits = new HashSet<PatientVisit>();
+        }
+    
         public string PatientName { get; set; }
         public string PatientLastName { get; set; }
         public string FatherName { get; set; }
@@ -26,5 +33,10 @@ namespace MVC_Sample.Models
         public Nullable<int> Age { get; set; }
         public string Gender { get; set; }
         public int PatientKey { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appointment> Appointments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PatientVisit> PatientVisits { get; set; }
     }
 }

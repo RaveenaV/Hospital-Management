@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MVC_Sample.Models.PatientVisit>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Symptoms)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProblemDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfVisit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patient.PatientName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Staff.StaffName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Symptoms)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProblemDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfVisit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.PatientName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Staff.StaffName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.VisitId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.VisitId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.VisitId })
+        </td>
+    </tr>
+}
+
+</table>

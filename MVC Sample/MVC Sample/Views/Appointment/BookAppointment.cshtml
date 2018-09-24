@@ -1,0 +1,53 @@
+﻿@model  MVC_Sample.Models.AppointmentDetails
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("BookAppointment","Appointment",FormMethod.Post))
+{
+	@Html.AntiForgeryToken()
+	<div class="body-content container col-md-9">
+		<div class="page-header">
+			<h4>Patient Appointment</h4>
+		</div>
+		<div class="form-horizontal">
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+			@*<div class="form-group hidden">
+				@Html.EditorFor(n => n.PatientId)
+			</div>*@
+
+			<div class="form-group">
+				@Html.Label("Doctor", htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					@*@Html.DropDownList("StaffName", new SelectList(Model.Doctors.Select(x => x.StaffName).Distinct().ToList()), new { @class = "input-large form-control" })*@
+					@Html.DropDownListFor(m => m.DoctorId, Model.Doctors, "Choose Doctor", new { @class = "input-large form-control" })
+				</div>
+			</div>
+			<div class="form-group">
+				@Html.Label("Patient", htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					@*@Html.DropDownList("StaffName", new SelectList(Model.Doctors.Select(x => x.StaffName).Distinct().ToList()), new { @class = "input-large form-control" })*@
+					@Html.DropDownListFor(m => m.PatientId, Model.Patients, "Choose Patient", new { @class = "input-large form-control" })
+				</div>
+			</div>
+			<div class="form-group">
+				@Html.Label("Problem", htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+				@Html.EditorFor(m=>m.Problem)
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+					<input type="submit" value="Book Appointment" class="btn btn-default" />
+				</div>
+			</div>
+			<div class="form-group error">
+				@if (@ViewBag.Status != null)
+				{
+					<label> @ViewBag.Status</label>
+				}
+			</div>
+		</div>
+	</div>
+}

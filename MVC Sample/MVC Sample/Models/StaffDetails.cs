@@ -17,7 +17,8 @@ namespace MVC_Sample.Models
 		[Required(ErrorMessage = "Role is required")]
 		public Roles Role { get; set; }
 		[Required(ErrorMessage = "IsAdmin is required")]
-		public bool IsAdmin { get; set; }
+		public Nullable<bool> IsAdmin { get; set; }
 
+		public List<StaffDetails> staffDetails { get; set; }
 	}
 }

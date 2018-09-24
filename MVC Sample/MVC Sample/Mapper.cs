@@ -18,6 +18,15 @@ namespace MVC_Sample
 			staff.StaffName = user.StaffName;
 			return staff;
 		}
+		public static StaffDetails MapStaffToStaffDetails(this Staff user)
+		{
+			StaffDetails staff = new StaffDetails();
+			staff.Designation = user.Designation;
+			staff.IsAdmin = user.IsAdmin;
+			staff.StaffLastName = user.StaffLastName;
+			staff.StaffName = user.StaffName;
+			return staff;
+		}
 		public static Patient MapPatientDetails(this PatientDetails patientDetails)
 		{
 			Patient patient = new Patient
@@ -36,7 +45,6 @@ namespace MVC_Sample
 			};
 			return patient;
 		}
-
 		public static PatientDetails MapPatientDetails(this Patient patient)
 		{
 			PatientDetails patientDetails = new PatientDetails

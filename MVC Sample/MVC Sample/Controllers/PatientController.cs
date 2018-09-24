@@ -27,11 +27,7 @@ namespace MVC_Sample.Controllers
 			ViewBag.ActiveMenu = "PatientSearch";
 			return View();
 		}
-		public ActionResult PatientAppointment()
-		{
-			ViewBag.ActiveMenu = "Appointment";
-			return PartialView("Appointment");
-		}
+	
 
 		[HttpPost]
 		public ActionResult PatientSearch([Bind(Include = "PatientKey,PatientName,PatientLastName,FatherName,HusbandName,GuardianName,BloodGroup,ContactNumber,ContactNumber2,DOB,Age,Gender")] PatientDetails patientDetails)
@@ -75,21 +71,6 @@ namespace MVC_Sample.Controllers
 			}
 			return View("Create",patient);
 		}
-
-		//// GET: Patients/Edit/5
-		//public ActionResult Edit(int? id)
-		//{
-		//	if (id == null)
-		//	{
-		//		return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-		//	}
-		//	Patient patient = db.Patients.Find(id);
-		//	if (patient == null)
-		//	{
-		//		return HttpNotFound();
-		//	}
-		//	return View(patient);
-		//}
 
 		//// POST: Patients/Edit/5
 		//// To protect from overposting attacks, please enable the specific properties you want to bind to, for 

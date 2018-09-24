@@ -23,14 +23,21 @@ namespace MVC_Sample.Controllers
 		//{
 		//    return View(db.Staffs.ToList());
 		//}
-		public ActionResult PatientAppointment()
+
+		[HttpGet]
+		public ActionResult Prescription()
 		{
-			ViewBag.ActiveMenu = "Appointment";
-			return PartialView("Appointment", iStaffRepository.GetAllDoctors());
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult Prescription(PrescriptionDetails patientPrescription)
+		{
+			return View("Prescription");
 		}
 		//public ActionResult GetAllDoctors ()
 		//{
-		//	iStaffRepository.GetAllDoctors();
+		//	iStaffRepository.GetAllDoctors();	
 		//	return View();
 		//}
 

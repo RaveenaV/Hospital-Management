@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="HospitalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Appointment">
+    <Key>
+      <PropertyRef Name="AppointnmentId" />
+    </Key>
+    <Property Name="AppointnmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientId" Type="int" Nullable="false" />
+    <Property Name="DoctorId" Type="int" Nullable="false" />
+    <Property Name="Problem" Type="nvarchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
   <EntityType Name="Patient">
     <Key>
       <PropertyRef Name="PatientKey" />
@@ -16,6 +26,17 @@
     <Property Name="Age" Type="int" />
     <Property Name="Gender" Type="varchar" MaxLength="1" Nullable="false" />
     <Property Name="PatientKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PatientVisits">
+    <Key>
+      <PropertyRef Name="VisitId" />
+    </Key>
+    <Property Name="VisitId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientId" Type="int" Nullable="false" />
+    <Property Name="DoctorId" Type="int" Nullable="false" />
+    <Property Name="Symptoms" Type="nvarchar" MaxLength="500" />
+    <Property Name="ProblemDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="DateOfVisit" Type="datetime" />
   </EntityType>
   <EntityType Name="ROLES">
     <Key>
@@ -46,6 +67,54 @@ warning 6002: The table/view 'Hospital.dbo.UserLogin' does not have a primary ke
     <Property Name="Password" Type="varchar" MaxLength="20" />
     <Property Name="UserName" Type="varchar" MaxLength="300" />
   </EntityType>
+  <Association Name="FK__Appointme__Docto__619B8048">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffKey" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Appointme__Patie__60A75C0F">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientKey" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PatientVi__Docto__656C112C">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+    <End Role="PatientVisits" Type="Self.PatientVisits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffKey" />
+      </Principal>
+      <Dependent Role="PatientVisits">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PatientVi__Patie__6477ECF3">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="PatientVisits" Type="Self.PatientVisits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientKey" />
+      </Principal>
+      <Dependent Role="PatientVisits">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Staff__RoleSKey__440B1D61">
     <End Role="ROLES" Type="Self.ROLES" Multiplicity="0..1" />
     <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
@@ -71,7 +140,9 @@ warning 6002: The table/view 'Hospital.dbo.UserLogin' does not have a primary ke
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="HospitalModelStoreContainer">
+    <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatientVisits" EntityType="Self.PatientVisits" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserLogin" EntityType="Self.UserLogin" store:Type="Tables" store:Schema="dbo">
@@ -82,6 +153,22 @@ warning 6002: The table/view 'Hospital.dbo.UserLogin' does not have a primary ke
     [UserLogin].[UserName] AS [UserName]
     FROM [dbo].[UserLogin] AS [UserLogin]</DefiningQuery>
     </EntitySet>
+    <AssociationSet Name="FK__Appointme__Docto__619B8048" Association="Self.FK__Appointme__Docto__619B8048">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="Appointment" EntitySet="Appointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Appointme__Patie__60A75C0F" Association="Self.FK__Appointme__Patie__60A75C0F">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Appointment" EntitySet="Appointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientVi__Docto__656C112C" Association="Self.FK__PatientVi__Docto__656C112C">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="PatientVisits" EntitySet="PatientVisits" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientVi__Patie__6477ECF3" Association="Self.FK__PatientVi__Patie__6477ECF3">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="PatientVisits" EntitySet="PatientVisits" />
+    </AssociationSet>
     <AssociationSet Name="FK__Staff__RoleSKey__440B1D61" Association="Self.FK__Staff__RoleSKey__440B1D61">
       <End Role="ROLES" EntitySet="ROLES" />
       <End Role="Staff" EntitySet="Staff" />

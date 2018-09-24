@@ -32,6 +32,7 @@ namespace MVC_Sample.Controllers
 				var userSuccess = _loginRepository.Login(user);
 				FormsAuthentication.SetAuthCookie(user.UserName,true);
 				Session["Role"] = userSuccess.Staff.ROLE.RoleName;
+				Session["StaffId"] = userSuccess.StaffSKey;
 				if (userSuccess == null)
 				{
 					ViewBag.NotValidUser = "User does not exists! Please register";

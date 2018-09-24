@@ -10,6 +10,7 @@ namespace MVC_Sample.Data
 	public class PatientRepository : IPatientRepository
 	{
 		HospitalManagementEntities hospitalEntities = new HospitalManagementEntities();
+
 		public PatientDetails GetPatientDetailsById(int id)
 		{
 			var patient = hospitalEntities.Patients.Where(p => p.PatientKey == id).FirstOrDefault();
@@ -45,6 +46,5 @@ namespace MVC_Sample.Data
 				return 0;
 			}
 		}
-
 	}
 }

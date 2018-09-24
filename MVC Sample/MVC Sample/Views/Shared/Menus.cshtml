@@ -1,4 +1,5 @@
 ﻿<div id="menus" class="col-md-3">
+	<div hidden> @Session["StaffId"]</div>
 	<ul class="nav nav-pills nav-stacked">
 		@if ((Session["Role"]) != null && Session["Role"].ToString() == "Pharmacist")
 		{
@@ -12,16 +13,16 @@
 					Staff
 					<span class="caret"></span>
 				</a>
-				@if (Session["Role"].ToString() == "Doctor")
-				{
-				<ul class="dropdown-menu">
-					@*<li class="nav-pills"><a href="#addStaff">Add Staff</a></li>*@
-					<li class="nav-pills">@Html.ActionLink("Add Staff", "Create", "Staff")</li>
-				</ul>
-				}
+				@*@if (Session["Role"].ToString() == "Doctor")
+				{*@
+					<ul class="dropdown-menu">
+						@*<li class="nav-pills"><a href="#addStaff">Add Staff</a></li>*@
+						<li class="nav-pills">@Html.ActionLink("Add Staff", "Create", "Staff")</li>
+					</ul>
+				@*}*@
 			</li>
 			<li class="dropdown">
-				<a class="dropdown-toggle" >
+				<a class="dropdown-toggle">
 					Patient
 					<span class="caret"></span>
 				</a>
@@ -31,8 +32,11 @@
 						<li class="nav-pills"><a href="#appointment">Patient Appointment</a></li>*@
 					<li class="nav-pills">@Html.ActionLink("Add Patient", "Create", "Patient")</li>
 					<li class="nav-pills">@Html.ActionLink("Patient Search", "PatientSearch", "Patient")</li>
-					<li class="nav-pills">@Html.ActionLink("Patient Appointment", "PatientAppointment", "")</li>
+					<li class="nav-pills">@Html.ActionLink("Patient Appointment", "BookPatientAppointment", "")</li>
 				</ul>
+			</li>
+			<li class="dropdown">
+				@Html.ActionLink("Appointments", "Appointments", "Staff")
 			</li>
 		}
 	</ul>
@@ -52,7 +56,7 @@
 		<div id="appointment" class="tab-pane">
 			@{
 				//Html.RenderPartial("appointment",new ViewDataDictionary(Model.StaffDetails));
-				Html.RenderAction("PatientAppointment", "Patient");
+				Html.RenderAction("BookPatientAppointment", "Patient");
 			}
 		</div>
 		<div id="addStaff" class="tab-pane">

@@ -110,6 +110,8 @@
 	</div>
 
 	<p>
+		@Html.ActionLink("Get Previous Visit Details", "PatientPreviousVisits", Model.PatientKey)
+		@Html.ActionLink("Get Prescription", "PatientPrescription")
 		@Html.ActionLink("Back to Search", "PatientSearch")
 		@Html.ActionLink("Save", "Create", "Patient")
 	</p>

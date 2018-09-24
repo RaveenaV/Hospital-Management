@@ -29,5 +29,7 @@ namespace MVC_Sample.Models
         public virtual DbSet<ROLE> ROLES { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
+        public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<PatientVisit> PatientVisits { get; set; }
     }
 }

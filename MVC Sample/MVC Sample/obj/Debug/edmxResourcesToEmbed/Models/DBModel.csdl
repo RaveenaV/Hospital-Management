@@ -16,6 +16,8 @@
     <Property Name="Age" Type="Int32" />
     <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PatientKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Appointments" Relationship="HospitalModel.FK__Appointme__Patie__60A75C0F" FromRole="Patient" ToRole="Appointment" />
+    <NavigationProperty Name="PatientVisits" Relationship="HospitalModel.FK__PatientVi__Patie__6477ECF3" FromRole="Patient" ToRole="PatientVisit" />
   </EntityType>
   <EntityType Name="ROLE">
     <Key>
@@ -37,6 +39,8 @@
     <Property Name="StaffKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="ROLE" Relationship="Self.FK__Staff__RoleSKey__440B1D61" FromRole="Staff" ToRole="ROLES" />
     <NavigationProperty Name="UserLogins" Relationship="Self.FK__UserLogin__Staff__4AB81AF0" FromRole="Staff" ToRole="UserLogin" />
+    <NavigationProperty Name="Appointments" Relationship="HospitalModel.FK__Appointme__Docto__619B8048" FromRole="Staff" ToRole="Appointment" />
+    <NavigationProperty Name="PatientVisits" Relationship="HospitalModel.FK__PatientVi__Docto__656C112C" FromRole="Staff" ToRole="PatientVisit" />
   </EntityType>
   <EntityType Name="UserLogin">
     <Key>
@@ -85,5 +89,96 @@
       <End Role="Staff" EntitySet="Staffs" />
       <End Role="UserLogin" EntitySet="UserLogins" />
     </AssociationSet>
+    <EntitySet Name="Appointments" EntityType="HospitalModel.Appointment" />
+    <EntitySet Name="PatientVisits" EntityType="HospitalModel.PatientVisit" />
+    <AssociationSet Name="FK__Appointme__Docto__619B8048" Association="HospitalModel.FK__Appointme__Docto__619B8048">
+      <End Role="Staff" EntitySet="Staffs" />
+      <End Role="Appointment" EntitySet="Appointments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Appointme__Patie__60A75C0F" Association="HospitalModel.FK__Appointme__Patie__60A75C0F">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Appointment" EntitySet="Appointments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientVi__Patie__6477ECF3" Association="HospitalModel.FK__PatientVi__Patie__6477ECF3">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="PatientVisit" EntitySet="PatientVisits" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientVi__Docto__656C112C" Association="HospitalModel.FK__PatientVi__Docto__656C112C">
+      <End Role="Staff" EntitySet="Staffs" />
+      <End Role="PatientVisit" EntitySet="PatientVisits" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Appointment">
+    <Key>
+      <PropertyRef Name="AppointnmentId" />
+    </Key>
+    <Property Name="AppointnmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <Property Name="DoctorId" Type="Int32" Nullable="false" />
+    <Property Name="Problem" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Staff" Relationship="HospitalModel.FK__Appointme__Docto__619B8048" FromRole="Appointment" ToRole="Staff" />
+    <NavigationProperty Name="Patient" Relationship="HospitalModel.FK__Appointme__Patie__60A75C0F" FromRole="Appointment" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="PatientVisit">
+    <Key>
+      <PropertyRef Name="VisitId" />
+    </Key>
+    <Property Name="VisitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <Property Name="DoctorId" Type="Int32" Nullable="false" />
+    <Property Name="Symptoms" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ProblemDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfVisit" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Patient" Relationship="HospitalModel.FK__PatientVi__Patie__6477ECF3" FromRole="PatientVisit" ToRole="Patient" />
+    <NavigationProperty Name="Staff" Relationship="HospitalModel.FK__PatientVi__Docto__656C112C" FromRole="PatientVisit" ToRole="Staff" />
+  </EntityType>
+  <Association Name="FK__Appointme__Docto__619B8048">
+    <End Type="HospitalModel.Staff" Role="Staff" Multiplicity="1" />
+    <End Type="HospitalModel.Appointment" Role="Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffKey" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Appointme__Patie__60A75C0F">
+    <End Type="HospitalModel.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="HospitalModel.Appointment" Role="Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientKey" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PatientVi__Patie__6477ECF3">
+    <End Type="HospitalModel.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="HospitalModel.PatientVisit" Role="PatientVisit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientKey" />
+      </Principal>
+      <Dependent Role="PatientVisit">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PatientVi__Docto__656C112C">
+    <End Type="HospitalModel.Staff" Role="Staff" Multiplicity="1" />
+    <End Type="HospitalModel.PatientVisit" Role="PatientVisit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffKey" />
+      </Principal>
+      <Dependent Role="PatientVisit">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

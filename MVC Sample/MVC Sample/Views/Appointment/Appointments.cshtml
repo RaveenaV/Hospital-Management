@@ -1,0 +1,36 @@
+﻿@model  IEnumerable<MVC_Sample.Models.Appointment>
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="table-responsive">
+	<header>
+		<h4>Appointments</h4>
+	</header>
+	<table class="table table-bordered table-condensed table-striped table-hover sortable">
+		@if (Model.Count() == 0)
+		{
+			<tr>
+				<td colspan="10">No Record's found.</td>
+			</tr>
+		}
+		else
+		{
+			<thead>
+				<tr class="danger">
+					<th data-defaultsign="_19"> PatientName</th>
+					<th data-defaultsort="disabled">Problem</th>
+					<th data-defaultsort="disabled">Consult</th>
+				</tr>
+			</thead>
+			foreach (var item in Model)
+			{
+				<tr>
+					<td>@item.Patient.PatientName</td>
+					<td>@item.Problem</td>
+					<td>@Html.ActionLink("Consult", "PatientPrescription", "Patient", item.AppointnmentId)</td>
+					<td>@Html.ActionLink("Delete Appointment", "DeleteAppointment","Appointment", item)</td>
+				</tr>
+			}
+		}
+	</table>
+</div>

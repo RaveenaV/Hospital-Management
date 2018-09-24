@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MVC_Sample.Data
 {
@@ -27,15 +28,10 @@ namespace MVC_Sample.Data
 				}
 				hospitalEntities.SaveChanges();
 			}
-			catch
+			catch(Exception ex)
 			{
 
 			}
-		}
-
-		public List<string> GetAllDoctors()
-		{
-			return hospitalEntities.Staffs.Where(s => s.RoleSKey == (int)Roles.Doctor).Select(s=>s.StaffName + s.StaffLastName).ToList();
 		}
 	}
 }
